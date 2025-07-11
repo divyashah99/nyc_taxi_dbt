@@ -6,7 +6,8 @@ nyc_taxi_dbt:
       method: service-account
       project: nyc-taxi-462721
       dataset: nyc_taxi_dbt
-      keyfile: /home/runner/gcp-creds.json
+      # keyfile: C:\Users\divya\Repos\ProjectRepo\nyc-taxi-analytics\keyfile.json
+      keyfile: "{{ env_var('DBT_GOOGLE_KEYFILE') }}"
       threads: 4
       timeout_seconds: 300
       location: US

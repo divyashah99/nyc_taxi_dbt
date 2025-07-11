@@ -27,15 +27,15 @@ jobs:
       # 4 Write GCP credentials from secret
       - name: Write GCP credentials
         run: |
-          printf '%s' "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" > $HOME/gcp-creds.json
+          mkdir -p "${HOME}"
+          # Write the secret content to the file
+          echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" > "${HOME}/gcp-creds.json"
 
 
       # 5 Run dbt
       - name: Run dbt
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.home }}/gcp-creds.json
         run: |
           dbt deps
-          dbt seed   --profiles-dir . --target dev
-          dbt run    --profiles-dir . --target dev
-          dbt test   --profiles-dir . --target dev
+          dbt seed --profiles-dir . --target dev
+          dbt run  --profiles-dir . --target dev
+          dbt test --profiles-dir . --target dev

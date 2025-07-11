@@ -10,6 +10,8 @@ env:
   
   # the contents of the keyfile pulled from GitHub Actions secrets 
   KEYFILE_CONTENTS: ${{secrets.GCP_SERVICE_ACCOUNT_KEY}}
+  GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+  GCS_BUCKET_NAME: ${{ secrets.GCS_BUCKET_NAME }}
 
 jobs:
   dbt-build:
@@ -50,3 +52,29 @@ jobs:
           dbt seed --profiles-dir . --target dev
           dbt run  --profiles-dir . --target dev
           dbt test --profiles-dir . --target dev
+
+
+       # 6. Generate dbt docs
+      - name: Generate dbt docs
+        run: |
+          dbt docs generate --profiles-dir . --target dev
+
+      # 7. Upload docs to GCS
+      - name: Upload docs to GCS
+        run: |
+          pip install --quiet google-cloud-storage
+          python - <<EOF
+          from google.cloud import storage
+          import os
+
+          client = storage.Client.from_service_account_json(os.environ['DBT_GOOGLE_KEYFILE'])
+          bucket = client.bucket(os.environ['GCS_BUCKET_NAME'])
+
+          doc_folder = 'target'
+          for root, dirs, files in os.walk(doc_folder):
+              for file in files:
+                  local_path = os.path.join(root, file)
+                  rel_path = os.path.relpath(local_path, doc_folder)
+                  blob = bucket.blob(f'dbt-docs/{rel_path}')
+                  blob.upload_from_filename(local_path)
+                  print(f'Uploaded {rel_path}')

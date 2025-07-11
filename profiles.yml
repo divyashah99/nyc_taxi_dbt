@@ -6,7 +6,6 @@ nyc_taxi_dbt:
       method: service-account
       project: nyc-taxi-462721
       dataset: nyc_taxi_dbt
-      # keyfile: C:\Users\divya\Repos\ProjectRepo\nyc-taxi-analytics\keyfile.json
       keyfile: /home/runner/gcp-creds.json
       threads: 4
       timeout_seconds: 300

@@ -1,0 +1,13 @@
+exposures:
+  - name: trips_dashboard
+    label: NYC Taxi Tableau Dashboard
+    type: dashboard
+    maturity: high
+    url: https://tableau.example.com/nyc-dashboard
+    description: >
+      Summary metrics and KPIs for NYC taxi trips.
+    depends_on:
+      - ref('dashboard_input')
+    owner:
+      name: Divya Shah
+      email: divya.shah7999@gmail.com

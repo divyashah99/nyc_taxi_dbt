@@ -1,0 +1,45 @@
+version: 2
+
+models:
+  - name: stg_taxi_trips
+    description: "Staged NYC Taxi trip data from BigQuery public dataset"
+    columns:
+      - name: vendor_id
+        tests:
+          - not_null
+          - accepted_values:
+              values: [1, 2, 5, 6]  # known valid values
+
+      - name: pickup_datetime
+        tests:
+          - not_null
+
+      - name: dropoff_datetime
+        tests:
+          - not_null
+
+      - name: passenger_count
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]  
+              quote: false
+
+      - name: trip_distance
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "{{ trip_distance }} >= 0"
+
+  - name: int_trip_metrics
+    description: "Enhanced metrics for NYC taxi trips"
+    columns:
+      - name: trip_id
+        description: "Synthetic unique identifier for trip"
+        tests:
+          - not_null
+          - unique
+      - name: pickup_datetime
+        tests:
+          - not_null
+  

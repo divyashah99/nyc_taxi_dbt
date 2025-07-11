@@ -31,6 +31,26 @@ jobs:
           # Write the secret content to the file
           echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" > "${HOME}/gcp-creds.json"
 
+       # --- DEBUGGING STEPS: ADD THESE TEMPORARILY ---
+      - name: Inspect gcp-creds.json content (DEBUG - REMOVE AFTER FIX)
+        run: |
+          echo "--- START FILE CONTENT ---"
+          # Show raw content with visible non-printable characters
+          cat -v "${HOME}/gcp-creds.json"
+          echo "--- END FILE CONTENT ---"
+          
+          echo "--- START HEX DUMP ---"
+          # Show hex representation of the first few bytes
+          head -c 20 "${HOME}/gcp-creds.json" | xxd
+          echo "--- END HEX DUMP ---"
+
+          echo "--- JSON VALIDATION ---"
+          # Attempt to parse as JSON using 'jq' (if available)
+          # 'jq' is usually pre-installed on ubuntu-latest runners
+          jq . "${HOME}/gcp-creds.json" || { echo "jq failed to parse JSON, check previous output for errors." ; exit 0; }
+          echo "--- END JSON VALIDATION ---"
+        shell: bash # Ensure bash for piping and commands like xxd
+
 
       # 5 Run dbt
       - name: Run dbt

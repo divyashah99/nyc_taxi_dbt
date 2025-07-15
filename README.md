@@ -12,6 +12,8 @@ NYC Taxi & Limousine Commission (TLC) generates massive amounts of transactional
 - **Performance Metrics**: Vendor comparisons, efficiency ratios
 - **Geographic Intelligence**: Zone-based demand patterns
 
+**🎯 [View Live Dashboard](https://public.tableau.com/app/profile/divya.babulal.shah/viz/NYC_Taxi_Analysis/Dashboard1)**
+
 ## 🏗️ Architecture & Data Engineering Stack
 
 ### **Core Technologies**
@@ -135,6 +137,8 @@ nyc_taxi_dbt/
 - **$450M+ revenue** total analyzed
 - **260+ pickup zones** mapped
 - **90+ days** of temporal analysis (Q1 focus)
+
+**📈 [Interactive Dashboard](https://public.tableau.com/app/profile/divya.babulal.shah/viz/NYC_Taxi_Analysis/Dashboard1)** - Explore the data yourself!
 
 ### **Key Findings**
 - **Peak Hours**: 6-9 AM and 5-7 PM (rush hour patterns)

@@ -1,3 +1,3 @@
 {{ config(materialized='table') }}
 
-select * from {{ ref('trips_summary') }}
+select * from {{ ref('mart_taxi_dashboard') }}

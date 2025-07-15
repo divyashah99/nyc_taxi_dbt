@@ -78,3 +78,5 @@ jobs:
                   blob = bucket.blob(f'dbt-docs/{rel_path}')
                   blob.upload_from_filename(local_path)
                   print(f'Uploaded {rel_path}')
+          EOF
+          

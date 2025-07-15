@@ -27,7 +27,8 @@ trip_with_lookups as (
         fare_amount,
         total_amount,
         pickup_location_id,
-        dropoff_location_id
+        dropoff_location_id,
+        payment_type_id
       )
     )
   )
